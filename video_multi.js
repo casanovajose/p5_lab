@@ -13,29 +13,33 @@ function setup() {
   videos[0].hide();
   videos[2].hide();
   videos[1].hide();
+  playTheVideo();
 } 
  
 function draw() { 
-background(255,0,155);
-  if (stage === 1){
-    text("Stage 1",100,100);
-  } else {
-    image(videos[whichVideo],0,0,windowWidth,windowHeight);
-    text("Video "+whichVideo,100,100);
-  }
+  background(255,0,155);
+  image(videos[whichVideo],0,0,windowWidth,windowHeight);
+  // if (stage === 1){
+  //   text("Stage 1",100,100);
+  // } else {
+  //   image(videos[whichVideo],0,0,windowWidth,windowHeight);
+  //   text("Video "+whichVideo,100,100);
+  // }
 }
  
 function playTheVideo() {
-  videos[whichVideo].play();
+  videos[whichVideo].autoplay();
   videos[whichVideo].onended(videoOver); //when video ends, call videoOver to return to first screen
 }
  
 function videoOver() {
   console.log("stopping video now"); 
-  videos[whichVideo].pause();
+  //videos[whichVideo].pause();
   //videos[whichVideo].rewind();
   videos[whichVideo].hide();
   stage = 1;
+  whichVideo++;
+  videos[whichVideo].autoplay();
 }
  
 function keyPressed() {
