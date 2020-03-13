@@ -1,3 +1,13 @@
+/**
+ * OBJETIVOS
+ * 
+ * 1. Tener una idea general del programa
+ * 2. Agregar items en los Arrays "preguntas" y "excluir"
+ * 3. Ver correctamente la visualización
+ * 4. Probar cambios en la visualizacion usando la referencia de P5js sobre las funciones de texto
+ * 5. Plantear (y si es posible programar) otros tipos de visualizaciones.
+ */
+
 const preguntas = [
   "es esto una pregunta a a a a a a ?",
   " a cuantas veces puedo decir la palabra pregunta en una pregunta ?",
@@ -14,7 +24,7 @@ const preguntas = [
   "¿Escriv0 mais uma pergunta?",
 ];
 
-const excluir = ["?", ""];
+const excluir = ["?", "."];
 let cantidadPalabras = [];
 
 /**
@@ -24,7 +34,8 @@ function setup () {
   createCanvas(window.innerWidth - 10, window.innerHeight- 10);
 
   for (let i = 0; i < preguntas.length; i++) {
-    agregarPalabras(preguntas[i]);
+    pregunta = limpiarCaracteres(preguntas[i]);
+    agregarPalabras(pregunta);
   }
 
   for (let clave in cantidadPalabras) {
@@ -56,6 +67,15 @@ function agregarPalabras(pregunta) {
 /**
  * Elimina palabras excluidas
  */
-function excluirPalabras() {
+function limpiarCaracteres(pregunta) {
+  let p = pregunta;
+  for (let i = 0; i < excluir.length; i++) {
+    p = p.replace(excluir[i], "");
+  }
+
+  return p;
+}
+
+function limpiarPalabras() {
 
 }
