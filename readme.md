@@ -22,5 +22,5 @@
 
 ## Ejecutar los ejemplos
 
-1. En la linea de comandos hay que ir al directorio del ejemplo y ejecutar el comando ```http-server -o```. 
+1. En la linea de comandos hay que ir al directorio base y ejecutar el comando ```http-server -o```.
 
