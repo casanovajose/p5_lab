@@ -1,0 +1,35 @@
+body {
+  padding: 20px;
+  margin: 0;
+  font-family: "monospace";
+  font-size: 15px;
+  color: #444;
+}
+
+h1 {
+  font-size: 1.8em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
+a, a:after, a:link, a:visited {
+  text-decoration: none;
+  color: 000;
+  font-size: 0.8em;
+}
+
+p {
+  font-size: 0.9em;
+  padding: 0 ;
+}
+
+ul {
+  list-style: none;
+  padding: 0 20px;
+}
+
+li {
+  margin: 10px 0;
+}
