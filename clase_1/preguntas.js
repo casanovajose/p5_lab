@@ -24,37 +24,47 @@ const preguntas = [
   "¿Escriv0 mais uma pergunta?",
 ];
 
-const excluir = ["?", "."];
-let cantidadPalabras = [];
+// lista de caracteres y de palabras que queremos excluir
+const excluirCaracteres = [];
+const excluirPalabras = [];
+
+// objeto que asocia la palabra con su cantidad de apariciones
+let cantidadPalabras = {};
 
 /**
  * configuración inicial de nuestro programa
  */
 function setup () {
+  // creamos un "Canvas" donde poder dibujar la nube de palabras
   createCanvas(window.innerWidth - 10, window.innerHeight- 10);
 
+  // para cada pregunta: limpiamos, filtramos y contamos las palabras
   for (let i = 0; i < preguntas.length; i++) {
-    pregunta = limpiarCaracteres(preguntas[i]);
-    agregarPalabras(pregunta);
+    // quitamos los caracteres que no precisamos
+    let pregunta = limpiarCaracteres(preguntas[i], excluirCaracteres);
+    // separamos la pregunta en palabras
+    let palabrasSeparadas = pregunta.split(" ");
+    // quitamos las plabras que no necesitamos
+    let p = limpiarPalabras(palabrasSeparadas, excluirPalabras);
+    // agregamos al contador de palabras
+    agregarPalabras(p);
   }
 
   for (let clave in cantidadPalabras) {
     let p = cantidadPalabras[clave];
     fill(random(0, 200), 100);
-    textSize(p.cantidad * 25);
+    textSize(p.cantidad * 15);
     text(p.palabra, random(50, window.innerWidth - 50), random(50, window.innerHeight - 50));
   }
 }
 
 /** 
   String pregunta
-  Array  palabras Arreglo que lleva la cuenta de las palabras
+  @param {Array} arrayPregunta contiene la pregunta separada en palabras
 */
-function agregarPalabras(pregunta) {
-  palabrasSeparadas = pregunta.split(" ");
-
-  for (let index = 0; index < palabrasSeparadas.length; index++) {
-    let p = palabrasSeparadas[index];
+function agregarPalabras(arrayPregunta) {
+  for (let index = 0; index < arrayPregunta.length; index++) {
+    let p = arrayPregunta[index];
 
     if (cantidadPalabras[p]) {
       cantidadPalabras[p].cantidad += 1;
@@ -65,17 +75,47 @@ function agregarPalabras(pregunta) {
 }
 
 /**
- * Elimina palabras excluidas
+ * Elimina caracteres excluidos
+ * @param {String} pregunta
+ * @param {Array} caracteres - caracteres a ser excluidos
+ * @returns {String} devuelve un String limpio
  */
-function limpiarCaracteres(pregunta) {
+function limpiarCaracteres(pregunta, caracteres) {
   let p = pregunta;
-  for (let i = 0; i < excluir.length; i++) {
-    p = p.replace(excluir[i], "");
+  for (let i = 0; i < caracteres.length; i++) {
+    p = p.replace(caracteres[i], "");
   }
-
-  return p;
+  // evitamos incluir los espacios en blanco
+  return p.trim();
 }
 
-function limpiarPalabras() {
+/**
+ *  Elimina las palabras excluidas
+ * 
+ * @param {Array} arrayPregunta - pregunta separada en palabras
+ * @param {Array} palabras - palabras a ser excluidas
+ * @returns {Array} array sin las palabras excluidas
+ */
+function limpiarPalabras(arrayPregunta, palabras) {
+  let arrayLimpio = [];
+  for (let i = 0; i < arrayPregunta.length; i++) {
+    if (!palabras.includes(arrayPregunta[i])) {
+      arrayLimpio.push(arrayPregunta[i]);
+    }
+  }
 
+  return arrayLimpio;
+}
+
+//----------------------------------
+//----------------------------------
+
+function imprimirPalabrasPorCantidad() {
+  const values = Object.values(cantidadPalabras);
+  console.log(values.sort((a, b) => {return b.cantidad - a.cantidad}));
+}
+
+function imprimirMayoresQue(c = 2) {
+  const values = Object.values(cantidadPalabras);
+  console.log(values.filter((p) => {return p.cantidad >= c}));
 }
